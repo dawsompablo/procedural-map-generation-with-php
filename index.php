@@ -1,4 +1,27 @@
-<?php include_once("procedural-generation.php"); ?>
+<?php
+include_once("vendor/autoload.php");
+
+use Dawsompablo\ProceduralGeneration\Noise\Noise;
+use Dawsompablo\ProceduralGeneration\Map\Map;
+use Dawsompablo\ProceduralGeneration\Entity\Pixel;
+use Dawsompablo\ProceduralGeneration\Entity\Point;
+
+$pixels = [];
+
+const WIDTH = 100;
+const HEIGHT = 100;
+const SEED = 100;
+
+$map = new Map();
+$noise = new Noise(SEED);
+
+for ($x = 0; $x <= WIDTH; $x++) {
+    for ($y = 0; $y <= HEIGHT; $y++) {
+        $pixels[$x][$y] = $map->drawPixel(new Pixel($x, $y, $noise->generate(new Point($x, $y))));
+    }
+}
+
+?>
 
 <style>
     :root {

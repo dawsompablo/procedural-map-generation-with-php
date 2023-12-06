@@ -1,0 +1,17 @@
+{
+    "name": "dawsompablo/procedural-generation",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Dawsompablo\\ProceduralGeneration\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Pablo Dawson",
+            "email": "dawsompablo@gmail.com"
+        }
+    ],
+    "require": {}
+}

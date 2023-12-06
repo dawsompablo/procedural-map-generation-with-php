@@ -1,12 +1,9 @@
 <?php
-class Point
-{
-    public function __construct(
-        public int $x,
-        public int $y
-    ) {
-    }
-}
+
+namespace Dawsompablo\ProceduralGeneration\Noise;
+
+use Dawsompablo\ProceduralGeneration\Entity\Point;
+use Dawsompablo\ProceduralGeneration\Map\Map;
 
 final class Noise
 {
@@ -42,6 +39,8 @@ final class Noise
 
     private function baseNoise(Point $point): float
     {
+        $map = new Map();
+
         if ($point->x % 10 === 0 && $point->y % 10 === 0) {
             $noise = $this->hash($point);
         } elseif ($point->x % 10 === 0) {
@@ -57,7 +56,7 @@ final class Noise
                 // The closest point divisible by 10, bellow our current pixel
             );
 
-            $noise = linear_interpolation(
+            $noise = $map->linear_interpolation(
                 // The hash value (or color) of that top point:
                 a: $this->hash($topPoint),
 
@@ -79,7 +78,7 @@ final class Noise
                 y: $point->y,
             );
 
-            $noise = linear_interpolation(
+            $noise = $map->linear_interpolation(
                 $this->hash($leftPoint),
                 $this->hash($rightPoint),
                 ($point->x - $leftPoint->x) / ($rightPoint->x - $leftPoint->x),
@@ -105,19 +104,19 @@ final class Noise
                 y: (ceil($point->y / 10) * 10),
             );
 
-            $a = linear_interpolation(
+            $a = $map->linear_interpolation(
                 $this->hash($topLeftPoint),
                 $this->hash($topRightPoint),
                 ($point->x - $topLeftPoint->x) / ($topRightPoint->x - $topLeftPoint->x),
             );
 
-            $b = linear_interpolation(
+            $b = $map->linear_interpolation(
                 $this->hash($bottomLeftPoint),
                 $this->hash($bottomRightPoint),
                 ($point->x - $bottomLeftPoint->x) / ($bottomRightPoint->x - $bottomLeftPoint->x),
             );
 
-            $noise = linear_interpolation(
+            $noise = $map->linear_interpolation(
                 $a,
                 $b,
                 ($point->y - $topLeftPoint->y) / ($bottomLeftPoint->y - $topLeftPoint->y),
